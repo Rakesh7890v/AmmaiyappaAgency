@@ -1,0 +1,19 @@
+[
+    {
+        "Choclate":[
+            {
+                id: 1,
+                name: 'Five Star',
+                price: 5,
+                quantity: 1,
+                image: fivestart5rs
+              },{
+                id: 2,
+                name: 'Five Star',
+                price: 10,
+                quantity: 1,
+                image: fivestart10rs
+            }
+        ]
+    }
+]
