@@ -1,5 +1,6 @@
 import AddProd from './AddProd'
 import './App.css'
+import axios from 'axios';
 import Products from './Products'
 import Header from './Header'
 import Login from './Login'
@@ -7,6 +8,8 @@ import {Routes, Route} from 'react-router-dom'
 import logo from './assets/logo.png';
 
 function App() {
+  axios.defaults.withCredentials = true;
+
   return (
     <div className='clg-container'>
       <div className="background-logo">
