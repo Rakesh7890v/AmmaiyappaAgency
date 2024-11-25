@@ -1,6 +1,5 @@
 import AddProd from './AddProd'
 import './App.css'
-import Events from './Events'
 import Products from './Products'
 import Header from './Header'
 import Login from './Login'
@@ -16,7 +15,6 @@ function App() {
       <Header />
       <Routes >
         <Route path='/' element={<Products />}/>
-        <Route path='/event' element={<Events />} />
         <Route path='/addprod' element={<AddProd />}/>
         <Route path='/login' element={<Login />} />
       </Routes>

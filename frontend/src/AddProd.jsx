@@ -9,6 +9,7 @@ const AddProd = () => {
     image: null,
     type: 'Chocolate',
   });
+  axios.defaults.withCredentials = true;
   const [submitMessage, setSubmitMessage] = useState(false);
 
   const handleSubmit = (e) => {

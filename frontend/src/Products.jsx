@@ -9,6 +9,7 @@ const FoodOrder = () => {
   const [login, setLogin] = useState(false);
   const [buttons, setButtons] = useState(false);
   const [showId, setShowId] = useState(null);
+  axios.defaults.withCredentials = true;
 
   const fetchFoods = () => {
     axios.get('https://ammaiyappa-api.vercel.app/foods')
