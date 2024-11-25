@@ -11,7 +11,7 @@ const FoodOrder = () => {
   const [showId, setShowId] = useState(null);
 
   const fetchFoods = () => {
-    axios.get('http://localhost:5000/foods')
+    axios.get('https://ammaiyappa-api.vercel.app/foods')
       .then(result => {
         setFoods(result.data);
         console.log("OUTPUT:", result.data);
@@ -48,7 +48,7 @@ const FoodOrder = () => {
   };
 
   const handleDelete = (id) => {
-    axios.post('http://localhost:5000/delete', { id })
+    axios.post('https://ammaiyappa-api.vercel.app/delete', { id })
       .then(result => {
         console.log(result);
         fetchFoods();
@@ -75,7 +75,7 @@ const FoodOrder = () => {
     formData.append('image', update.image);
     formData.append('type', update.type);
 
-    axios.post('http://localhost:5000/update', formData, {
+    axios.post('https://ammaiyappa-api.vercel.app/update', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -107,7 +107,7 @@ const FoodOrder = () => {
           <div className="foods" key={food._id}>
             <div className="foods-image">
               <div className="prod-image">
-                <img src={`http://localhost:5000/${food.image}`} alt={food.name} />
+                <img src={`https://ammaiyappa-api.vercel.app/${food.image}`} alt={food.name} />
               </div>
             </div>
 
