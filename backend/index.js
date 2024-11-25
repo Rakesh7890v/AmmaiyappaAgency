@@ -10,7 +10,7 @@ const path = require('path');
 const app = express();
 const port = 5000;
 app.use(cors({
-    origin: 'https://yourblogging.vercel.app',
+    origin: 'https://ammaiyappaagency.vercel.app',
     methods: 'GET,POST,PUT',
     allowedHeaders: 'Content-Type, Authorization',
     credentials: true
