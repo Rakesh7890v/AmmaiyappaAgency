@@ -10,7 +10,7 @@ const path = require('path');
 const app = express();
 const port = 5000;
 app.use(cors({
-    origin: ['https://ammaiyappaagency.vercel.app','http://localhost:5173'],
+    origin: 'https://ammaiyappaagency.vercel.app',
     methods: 'GET,POST,PUT',
     allowedHeaders: 'Content-Type, Authorization',
     credentials: true
@@ -67,7 +67,7 @@ app.post('/addfoods', upload.single('image'), (req, res) => {
     };
 
     FoodModel.create(foodData)
-        .then(food => res.status(200).json(food))
+        .then(food => res.status(201).json(food))
         .catch(err => {
             console.error(err);
             res.status(500).json({ error: 'An error occurred while adding the food' });
