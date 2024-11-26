@@ -53,7 +53,7 @@ app.get('/foods', (req, res) => {
         });
 });
 
-app.post('/foods', upload.single('image'), (req, res) => {
+app.post('/addfoods', upload.single('image'), (req, res) => {
     if (!req.file) {
         return res.status(400).json({ error: 'No file uploaded' });
     }
@@ -67,7 +67,7 @@ app.post('/foods', upload.single('image'), (req, res) => {
     };
 
     FoodModel.create(foodData)
-        .then(food => res.status(201).json(food))
+        .then(food => res.status(200).json(food))
         .catch(err => {
             console.error(err);
             res.status(500).json({ error: 'An error occurred while adding the food' });

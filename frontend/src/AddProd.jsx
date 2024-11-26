@@ -23,7 +23,7 @@ const AddProd = () => {
     formData.append('image', foods.image);
     formData.append('type', foods.type);
 
-    axios.post('https://ammaiyappa-api.vercel.app/foods', formData, {
+    axios.post('https://ammaiyappa-api.vercel.app/addfoods', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
