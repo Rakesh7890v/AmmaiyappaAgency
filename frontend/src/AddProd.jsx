@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 const AddProd = () => {
@@ -10,13 +10,19 @@ const AddProd = () => {
     type: 'Chocolate',
   });
   axios.defaults.withCredentials = true;
-  const [submitMessage, setSubmitMessage] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    const formData = new FormData();
 
+    if (!foods.name || !foods.price || !foods.qnt || !foods.image) {
+      setSubmitMessage('Error: Please fill all fields.');
+      return;
+    }
+
+    setLoading(true);
+    const formData = new FormData();
     formData.append('name', foods.name);
     formData.append('price', foods.price);
     formData.append('qnt', foods.qnt);
@@ -35,19 +41,21 @@ const AddProd = () => {
         qnt: '',
         image: null,
         type: 'Chocolate',
-      });      
-      setSubmitMessage(true);
-      setTimeout(() => {
-        setSubmitMessage(false);
-      },2000);
-      console.log(result)}
-    )
-    .catch(err => console.log(err));
+      });
+      setSubmitMessage('Successfully Added');
+      setLoading(false);
+    })
+    .catch(err => {
+      console.error(err);
+      setSubmitMessage('Error: Failed to add product.');
+      setLoading(false);
+    });
   };
 
   return (
     <div>
-    {submitMessage && <p className='successsubmit'>Sucessfully Added</p>}
+      {submitMessage && <p className='successsubmit'>{submitMessage}</p>}
+      {loading && <p>Loading...</p>}
       <div className="newProd-container">
         <form onSubmit={handleSubmit}>
           <input
@@ -72,6 +80,9 @@ const AddProd = () => {
             type="file"
             onChange={(e) => setFoods({ ...foods, image: e.target.files[0] })}
           />
+          {foods.image && (
+            <img src={URL.createObjectURL(foods.image)} alt="Preview" />
+          )}
           <select
             value={foods.type}
             onChange={(e) => setFoods({ ...foods, type: e.target.value })}
@@ -83,7 +94,7 @@ const AddProd = () => {
             <option value="Cool-Drinks">Cool-Drinks</option>
             <option value="Essentials">Essentials</option>
           </select>
-          <button>Submit</button>
+          <button disabled={loading}>Submit</button>
         </form>
       </div>
     </div>
