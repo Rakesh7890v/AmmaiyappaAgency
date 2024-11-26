@@ -14,7 +14,7 @@ app.use(cors({
     methods: 'GET,POST,PUT',
     allowedHeaders: 'Content-Type, Authorization',
     credentials: true
-}));
+}))
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,19 +24,14 @@ mongoose.connect("mongodb+srv://rakeshrishi098:Rakesh.v109@sabari.fcdhg.mongodb.
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Connection error", err));
 
-const tempUploadDir = path.join(__dirname, 'tmp');
 const uploadDir = path.join(__dirname, 'uploads');
-
-if (!fs.existsSync(tempUploadDir)) {
-    fs.mkdirSync(tempUploadDir);
-}
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir);
 }
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, tempUploadDir);
+        cb(null, uploadDir);
     },
     filename: function (req, file, cb) {
         cb(null, file.originalname);
@@ -47,7 +42,7 @@ const upload = multer({ storage: storage });
 
 app.get('/', (req,res) => {
     res.json("Hello");
-});
+})
 
 app.get('/foods', (req, res) => {
     FoodModel.find({})
@@ -63,39 +58,20 @@ app.post('/addfoods', upload.single('image'), (req, res) => {
         return res.status(400).json({ error: 'No file uploaded' });
     }
 
-    const tempFilePath = path.join(tempUploadDir, req.file.filename);
-    const finalFilePath = path.join(uploadDir, req.file.filename);
+    const foodData = {
+        name: req.body.name,
+        price: req.body.price,
+        qnt: req.body.qnt,
+        image: `uploads/${req.file.filename}`,
+        type: req.body.type,
+    };
 
-<<<<<<< HEAD
     FoodModel.create(foodData)
         .then(food => res.status(201).json(food))
         .catch(err => {
             console.error(err);
             res.status(500).json({ error: 'An error occurred while adding the food' });
         });
-=======
-    fs.rename(tempFilePath, finalFilePath, (err) => {
-        if (err) {
-            console.error('File move error:', err);
-            return res.status(500).json({ error: 'Failed to move file' });
-        }
-
-        const foodData = {
-            name: req.body.name,
-            price: req.body.price,
-            qnt: req.body.qnt,
-            image: `uploads/${req.file.filename}`,
-            type: req.body.type,
-        };
-
-        FoodModel.create(foodData)
-            .then(food => res.status(200).json(food))
-            .catch(err => {
-                console.error(err);
-                res.status(500).json({ error: 'An error occurred while adding the food' });
-            });
-    });
->>>>>>> ef4947ce090c3cea4378ee185c056b833fe5a5ac
 });
 
 app.post('/update', upload.single('image'), async (req, res) => {
@@ -119,12 +95,13 @@ app.post('/update', upload.single('image'), async (req, res) => {
   }
 });
 
+
 app.post('/delete', (req, res) => {
     const {id} = req.body;
     FoodModel.findByIdAndDelete(id)
-    .then(() => res.send("Success"))
+    .then(() => res.send("Sucess"))
     .catch(err => console.log(err));
-});
+})
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
